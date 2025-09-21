@@ -1,0 +1,52 @@
+<!-- Reproductor 1 — Variante Clásica -->
+<style>
+.rp1 { max-width:500px;margin:18px auto;background:#0e1015;color:#fff;font-family:"Saira Condensed",sans-serif;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.6);text-align:center}
+.rp1 h2{margin:0 0 8px;font-size:22px;color:#e7433c}
+.rp1 p{margin:0 0 12px;color:#bdbdbd}
+.rp1 .controls{display:flex;justify-content:center;gap:12px;margin-bottom:10px}
+.rp1 .btn{background:#e7433c;border:0;border-radius:6px;padding:10px 18px;color:#fff;font-size:15px;cursor:pointer}
+.rp1 .btn:hover{background:#c22f28}
+.rp1 .volume{width:80%;margin:0 auto;display:block}
+.rp1 audio{display:none}
+</style>
+
+<div class="rp1">
+  <h2>Fusion Grupera 88.9 FM</h2>
+  <p>Emisión en vivo</p>
+  <div class="controls">
+    <button class="btn" id="playBtn1" aria-label="Play/Pause">▶ Play</button>
+    <button class="btn" id="stopBtn1" aria-label="Stop">■ Stop</button>
+  </div>
+  <input type="range" id="vol1" class="volume" min="0" max="1" step="0.01" value="1">
+  <audio id="audio1" preload="none" crossorigin="anonymous">
+    <source src="https://stream.zeno.fm/78c7xn154v8uv" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+</div>
+
+<script>
+(function(){
+  const audio = document.getElementById('audio1');
+  const playBtn = document.getElementById('playBtn1');
+  const stopBtn = document.getElementById('stopBtn1');
+  const vol = document.getElementById('vol1');
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(e=>console.log('play err',e));
+      playBtn.textContent = '⏸ Pause';
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶ Play';
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    audio.pause();
+    try{ audio.currentTime = 0; }catch(e){}
+    playBtn.textContent = '▶ Play';
+  });
+
+  vol.addEventListener('input', ()=> audio.volume = vol.value);
+})();
+</script>
